@@ -23,7 +23,7 @@ function Popular({ popular, API_IMG }) {
   return (
     <>
       <h1 className="text-center text-5xl font-bold py-10 ">Popüler</h1>
-      <ul className="bg-[#111111] flex text-center justify-center items-center p-20 lg:px-2 lg:py-10 ">
+      <ul className="bg-[#111111] flex text-center justify-center items-center p-20 lg:px-2 lg:py-10 relative ">
         <Swiper
           spaceBetween={20}
           slidesPerView={4}
@@ -54,39 +54,45 @@ function Popular({ popular, API_IMG }) {
             </SwiperSlide>
           ))}
         </Swiper>
+        <Modal
+          show={show}
+          onHide={handleClose}
+          className="absolute top-[900px] lg:top-[1200px] left-[10%] flex justify-center items-center w-[80%]  z-30 bg-[#333] p-4 m-center"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="text-left text-2xl">
+              {data.title}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body className="w-full">
+            <img
+              className="w-44 float-left mr-10 "
+              src={API_IMG + data.poster_path}
+              alt=""
+            />
+            <h3 className="pt-2  ml-12"> {data.title || ""} </h3>
+            <h4 className="py-2"> IMDB: {data.vote_average} </h4>
+            <h5> Yayın Tarihi: {data.release_date} </h5>
+            <br></br>
+            <h6>Özet</h6>
+            <p>
+              {" "}
+              {data.overview
+                ? data.overview
+                : "lorem ipsum dolar sit amet"}{" "}
+            </p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={handleClose}
+              className="bg-white text-[#171717] p-2 font-bold my-4"
+            >
+              Kapat
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </ul>
-
-      <Modal
-        show={show}
-        onHide={handleClose}
-        className="absolute w-[780px] lg:w-[400px]  float-left  top-0 flex  justify-center items-center z-30 bg-[#333] p-4 "
-      >
-        <Modal.Header closeButton>
-          <Modal.Title className="text-left text-2xl">{data.title}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="w-full">
-          <img
-            className="w-44 float-left mr-10 "
-            src={API_IMG + data.poster_path}
-            alt=""
-          />
-          <h3 className="pt-2  ml-12"> {data.title || ""} </h3>
-          <h4 className="py-2"> IMDB: {data.vote_average} </h4>
-          <h5> Yayın Tarihi: {data.release_date} </h5>
-          <br></br>
-          <h6>Özet</h6>
-          <p> {data.overview} </p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={handleClose}
-            className="bg-white text-[#171717] p-2 font-bold my-4"
-          >
-            Kapat
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 }
